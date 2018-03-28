@@ -27,7 +27,7 @@ module.exports = ""
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container p-5\">\n <h1>Compie Test</h1>\n  <!--Start-->\n  <app-googlemap></app-googlemap>\n  <!--End-->\n</div>\n"
+module.exports = "<div class=\"container p-5\">\n <h1>Compie Test Angular 5</h1>\n  <!--Start-->\n  <app-googlemap></app-googlemap>\n  <!--End-->\n</div>\n"
 
 /***/ }),
 
@@ -117,7 +117,7 @@ module.exports = ""
 /***/ "./src/app/googlemap/googlemap.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  googlemap works!\n</p>\n<ng4geo-autocomplete [userSettings]=\"userSettings\" (componentCallback)=\"autoCompleteCallback1($event)\"></ng4geo-autocomplete>\n"
+module.exports = "<ng4geo-autocomplete [userSettings]=\"userSettings\"\n                     (componentCallback)=\"autoCompleteCallback1($event)\"></ng4geo-autocomplete>\n\n<table class=\"table\">\n  <thead>\n  <tr>\n    <th scope=\"col\">Company</th>\n    <th scope=\"col\">Branch</th>\n    <th scope=\"col\">latitude</th>\n    <th scope=\"col\">langitude</th>\n    <th scope=\"col\" *ngIf=\"isChosed\">Distance</th>\n  </tr>\n  </thead>\n  <tbody>\n  <tr *ngFor=\"let company of companies\">\n    <td>{{company.company}}</td>\n    <td>{{company.branche}}</td>\n    <td>{{company.lat}}</td>\n    <td>{{company.lng}}</td>\n    <td *ngIf=\"isChosed\">{{company.distance}}</td>\n  </tr>\n  </tbody>\n</table>\n"
 
 /***/ }),
 
@@ -127,6 +127,7 @@ module.exports = "<p>\n  googlemap works!\n</p>\n<ng4geo-autocomplete [userSetti
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return GooglemapComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mock_companies__ = __webpack_require__("./src/app/mock-companies.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -137,14 +138,57 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var GooglemapComponent = /** @class */ (function () {
     function GooglemapComponent() {
+        this.companies = __WEBPACK_IMPORTED_MODULE_1__mock_companies__["a" /* COMPANIES */];
         this.userSettings = {};
+        this.isChosed = false;
     }
     GooglemapComponent.prototype.autoCompleteCallback1 = function (selectedData) {
+        this.isChosed = true;
         console.log(selectedData);
+        console.log(selectedData.data.geometry.location);
+        // console.log(selectedData.data.geometry.location.lat);
+        var lat1 = selectedData.data.geometry.location.lat;
+        var lon1 = selectedData.data.geometry.location.lng;
+        // console.log(lat1, lon1);
+        // this.companies.forEach((company) => {
+        //   console.log(company);
+        //   let lat2 = company.lat;
+        //   let lon2 = company.lng;
+        //   console.log(this.distance(lat1, lon1, lat2, lon2, 'K'));
+        //   let dist = this.distance(lat1, lon1, lat2, lon2, 'K');
+        //   this.companies[company].distance = dist;
+        // });
+        for (var i = 0; i < this.companies.length; i++) {
+            var lat2 = this.companies[i].lat;
+            var lon2 = this.companies[i].lng;
+            this.companies[i].distance = Math.round(this.distance(lat1, lon1, lat2, lon2, 'K'));
+            console.log(this.companies[i]);
+        }
+        // this.distance(lat1, lon1, this.companies., lon2);
     };
     GooglemapComponent.prototype.ngOnInit = function () {
+    };
+    GooglemapComponent.prototype.distance = function (lat1, lon1, lat2, lon2, unit) {
+        var radlat1 = Math.PI * lat1 / 180;
+        var radlat2 = Math.PI * lat2 / 180;
+        var radlon1 = Math.PI * lon1 / 180;
+        var radlon2 = Math.PI * lon2 / 180;
+        var theta = lon1 - lon2;
+        var radtheta = Math.PI * theta / 180;
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        dist = Math.acos(dist);
+        dist = dist * 180 / Math.PI;
+        dist = dist * 60 * 1.1515;
+        if (unit == 'K') {
+            dist = dist * 1.609344;
+        }
+        if (unit == 'N') {
+            dist = dist * 0.8684;
+        }
+        return dist;
     };
     GooglemapComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
@@ -157,6 +201,33 @@ var GooglemapComponent = /** @class */ (function () {
     return GooglemapComponent;
 }());
 
+
+
+/***/ }),
+
+/***/ "./src/app/mock-companies.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return COMPANIES; });
+var COMPANIES = [
+    { company: 'Shufersal', branche: 'Haifa 1', lat: 32.814424, lng: 34.983941, distance: 0 },
+    { company: 'Shufersal', branche: 'Haifa 2', lat: 32.816574, lng: 34.971150, distance: 0 },
+    { company: 'Shufersal', branche: 'haifa 3', lat: 32.805842, lng: 34.964029, distance: 0 },
+    { company: 'Shufersal', branche: 'haifa 4', lat: 32.814454, lng: 34.984941, distance: 0 },
+    { company: 'Decatlon', branche: 'Haifa 1', lat: 32.815624, lng: 34.985241, distance: 0 },
+    { company: 'Decatlon', branche: 'Haifa 2', lat: 32.811174, lng: 34.971150, distance: 0 },
+    { company: 'Decatlon', branche: 'haifa 3', lat: 32.805323, lng: 34.964231, distance: 0 },
+    { company: 'Decatlon', branche: 'haifa 4', lat: 32.813444, lng: 34.984921, distance: 0 },
+    { company: 'Esh', branche: 'Haifa 1', lat: 32.814424, lng: 34.983941, distance: 0 },
+    { company: 'Esh', branche: 'Haifa 2', lat: 32.816640, lng: 34.971158, distance: 0 },
+    { company: 'Esh', branche: 'haifa 3', lat: 32.805987, lng: 34.964917, distance: 0 },
+    { company: 'Esh', branche: 'haifa 4', lat: 32.814654, lng: 34.984564, distance: 0 },
+    { company: 'Mega', branche: 'Haifa 1', lat: 32.814244, lng: 34.983141, distance: 0 },
+    { company: 'Mega', branche: 'Haifa 2', lat: 32.813174, lng: 34.972530, distance: 0 },
+    { company: 'Mega', branche: 'haifa 3', lat: 32.805812, lng: 34.963329, distance: 0 },
+    { company: 'Mega', branche: 'haifa 4', lat: 32.813254, lng: 34.984441, distance: 0 },
+];
 
 
 /***/ }),
