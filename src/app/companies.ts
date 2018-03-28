@@ -1,6 +1,6 @@
 export class Company {
   company: string;
-  branche: string;
+  branch: string;
   lat?: number;
   lng?: number;
   distance?: number;

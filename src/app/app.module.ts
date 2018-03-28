@@ -5,6 +5,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { GooglemapComponent } from './googlemap/googlemap.component';
 import {Ng4GeoautocompleteModule} from 'ng4-geoautocomplete';
+import { OrderModule } from 'ngx-order-pipe';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import {Ng4GeoautocompleteModule} from 'ng4-geoautocomplete';
   ],
   imports: [
     BrowserModule,
-    Ng4GeoautocompleteModule.forRoot()
+    Ng4GeoautocompleteModule.forRoot(),
+    OrderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

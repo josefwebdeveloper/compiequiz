@@ -1,23 +1,22 @@
-<ng4geo-autocomplete [userSettings]="userSettings"
-                     (componentCallback)="autoCompleteCallback1($event)"></ng4geo-autocomplete>
+<ng4geo-autocomplete [userSettings]="userSettings" (componentCallback)="autoCompleteCallback1($event)"></ng4geo-autocomplete>
 
 <table class="table">
   <thead>
-  <tr>
-    <th scope="col">Company</th>
-    <th scope="col">Branch</th>
-    <th scope="col">latitude</th>
-    <th scope="col">langitude</th>
-    <th scope="col" *ngIf="isChosed">Distance</th>
-  </tr>
+    <tr>
+      <th scope="col">Company</th>
+      <th scope="col">Branch</th>
+      <th scope="col">latitude</th>
+      <th scope="col">longitude</th>
+      <th scope="col" *ngIf="isChosed">Distance(km)</th>
+    </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let company of companies">
-    <td>{{company.company}}</td>
-    <td>{{company.branche}}</td>
-    <td>{{company.lat}}</td>
-    <td>{{company.lng}}</td>
-    <td *ngIf="isChosed">{{company.distance}}</td>
-  </tr>
+    <tr *ngFor="let company of companies | orderBy: order">
+      <td>{{company.company}}</td>
+      <td>{{company.branch}}</td>
+      <td>{{company.lat}}</td>
+      <td>{{company.lng}}</td>
+      <td *ngIf="isChosed">{{company.distance}}</td>
+    </tr>
   </tbody>
 </table>
