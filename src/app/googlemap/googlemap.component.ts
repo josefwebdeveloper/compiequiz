@@ -19,13 +19,20 @@ export class GooglemapComponent implements OnInit {
     console.log(selectedData.data.geometry.location);
     let lat1 = selectedData.data.geometry.location.lat;
     let lon1 = selectedData.data.geometry.location.lng;
-    for (let i = 0; i < this.companies.length; i++) {
+    // for (let i = 0; i < this.companies.length; i++) {
 
-      let lat2 = this.companies[i].lat;
-      let lon2 = this.companies[i].lng;
-      this.companies[i].distance = Math.round(this.distance(lat1, lon1, lat2, lon2, 'K') * 100) / 100;
-      console.log(this.companies[i]);
-    }
+    //   let lat2 = this.companies[i].lat;
+    //   let lon2 = this.companies[i].lng;
+    //   this.companies[i].distance = Math.round(this.distance(lat1, lon1, lat2, lon2, 'K') * 100) / 100;
+    //   console.log(this.companies[i]);
+    // }
+    this.companies.forEach((company, i) => {
+      const lat2 = this.companies[i].lat;
+      const lon2 = this.companies[i].lng;
+        this.companies[i].distance = Math.round(this.distance(lat1, lon1, lat2, lon2, 'K') * 100) / 100;
+        console.log(this.companies[i]);
+        
+    });
   }
 
   constructor() {
@@ -35,6 +42,7 @@ export class GooglemapComponent implements OnInit {
 
 
   }
+
 
   distance(lat1, lon1, lat2, lon2, unit) {
     let radlat1 = Math.PI * lat1 / 180;
