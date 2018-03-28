@@ -3,14 +3,18 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { GooglemapComponent } from './googlemap/googlemap.component';
+import {Ng4GeoautocompleteModule} from 'ng4-geoautocomplete';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    GooglemapComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    Ng4GeoautocompleteModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
